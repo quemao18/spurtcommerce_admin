@@ -41,6 +41,7 @@ export class GeneralSettingComponent implements OnInit {
   private keyword = '';
   public pageSize = '10';
   private offset = 0;
+  private pagenationcount = 1;
 
   // Form Group
   public generalSettings: FormGroup;
@@ -55,6 +56,10 @@ export class GeneralSettingComponent implements OnInit {
   public currency: FormControl;
   public maintenanceMode: FormControl;
   public submitted: any;
+  private countryId: any;
+  public countryvalid: any;
+  public config: any = { displayKey: 'name', value: 'countryId', search: true };
+
 
   // Language
 
@@ -144,6 +149,15 @@ export class GeneralSettingComponent implements OnInit {
     });
   }
 
+  
+  // DropDown list  changes event
+  selectionChanged(event) {
+    this.countryId = event.value.countryId;
+    if (this.countryId) {
+      this.countryvalid = false;
+    }
+  }
+
   /**
    * Handles form 'list' event. Calls sandbox country countrylist function .
    *
@@ -151,10 +165,27 @@ export class GeneralSettingComponent implements OnInit {
    */
   countrylist(offset: number = 0, keyword) {
     const params: any = {};
-    params.limit = this.pageSize;
+    params.limit = 0;
     params.offset = offset;
     params.keyword = this.keyword;
     this.countrysandbox.getcountrieslist(params);
+  }
+
+    /**
+   * Handles form 'dropdown list' event. Calls sandbox Country getcountrieslist and getCountryCount function if form is valid.
+   *
+   * @param params storing entire value
+   */
+  getCountryList(offset: number = 0, keyword) {
+    const params: any = {};
+    params.limit = 0;
+    params.offset = offset;
+    params.keyword = this.keyword;
+    this.countrysandbox.getcountrieslist(params);
+    if (this.pagenationcount) {
+      params.count = 'true';
+      this.countrysandbox.getCountryCount(params);
+    }
   }
 
   /**
@@ -164,7 +195,7 @@ export class GeneralSettingComponent implements OnInit {
    */
   zonesList(offset: number = 0) {
     const params: any = {};
-    params.limit = this.pageSize;
+    params.limit = 0;
     params.offset = offset;
     params.keyword = this.keyword;
     this.zonesandbox.getZoneList(params);

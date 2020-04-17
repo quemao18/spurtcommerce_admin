@@ -65,19 +65,32 @@
                     <div class="form-group">
                         <label class="control-label">Country</label>
                         <select class="form-control custom-select" data-placeholder="Choose Country" formControlName="country" placeholder="Country">
-                            <option *ngFor="let country of countrysandbox.getcountries$ | async"
+                            <option [class.visible]="'false'"
+                             *ngFor="let country of countrysandbox.getcountries$ | async"
                                     value={{country.countryId}}>
                                 {{country.name}}
                             </option>
                         </select>
                     </div>
                 </div>
+                <!-- <div class="col-lg-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Country<sup class="supvalidation">*</sup></label>
+                        <div class="dd-items-container">
+                            <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="country" (mouseover)="onHover($event) " 
+                            (mouseout)="onHover($event) " [config]="config" [options]="countrysandbox.getcountries$ | async" 
+                            [multiple]="false" [ngClass]="{ 'is-invalid': submitted && f.country.errors }"></ngx-select-dropdown>
+                        </div>
+                        <div style="color: #f62d51;font-size: 80%" *ngIf="countryvalid">Country is required
+                        </div>
+                    </div>
+                </div> -->
                 <div class="col-lg-6 col-xs-12">
 
                     <div class="form-group">
                         <label class="control-label">Region / State</label>
                         <select class="form-control custom-select" data-placeholder="Choose Region" formControlName="zone" placeholder="Region">
-                            <option *ngFor="let zone of zonesandbox.getzoneslist$ | async"
+                            <option *ngFor="let zone of (zonesandbox.getzoneslist$ | async)"
                                     value={{zone.zoneId}}>
                                 {{zone.name}}
                             </option>

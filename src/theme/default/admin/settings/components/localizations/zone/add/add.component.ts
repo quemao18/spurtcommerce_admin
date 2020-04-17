@@ -176,7 +176,7 @@ export class ZoneAddComponent implements OnInit {
    */
   getCountryList(offset: number = 0, keyword) {
     const params: any = {};
-    params.limit = 100;
+    params.limit = 0;
     params.offset = offset;
     params.keyword = this.keyword;
     this.countrysandbox.getcountrieslist(params);
